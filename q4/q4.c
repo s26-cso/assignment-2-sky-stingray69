@@ -1,18 +1,21 @@
 #include<stdio.h>
 #include<dlfcn.h>
 
-int main(int argc, char* argv[]) {
+int main() {
     char op[6];
-    int num1, num2;
+    int a, b;
 
-    while(scanf("%5s %d %d", op, &num1, &num2) == 3) {
-        char lib_path[20];
+    while(1) {
+        scanf("%5s %d %d", op, &a, &b);
+        char path[20];
 
-        snprintf(lib_path, sizeof(lib_path), "./lib%s.so", op);
+        snprintf(path, sizeof(path), "./lib%s.so", op);
         // ref: https://mprtmma.medium.com/c-shared-library-dynamic-loading-eps-2-28f0a109250a
-        void *handle = dlopen(lib_path, RTLD_NOW);
+        void *handle;
+        handle = dlopen(path, RTLD_NOW);
         if(!handle) {
-            continue;
+            printf("Error\n");
+            return -1;  
         }
 
         dlerror();
@@ -23,9 +26,8 @@ int main(int argc, char* argv[]) {
         char *error = dlerror();
 
         if(error == NULL) {
-            int result = operation(num1, num2);
+            int result = operation(a, b);
             printf("%d\n", result);
-            fflush(stdout);
         }
 
         dlclose(handle);
