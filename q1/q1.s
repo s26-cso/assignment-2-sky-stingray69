@@ -1,6 +1,7 @@
 .globl make_node
 .globl insert
 .globl get
+.globl getAtMost
 
 make_node: 
     addi sp, sp, -16
@@ -18,7 +19,6 @@ make_node:
     ld   ra, 8(sp)
     addi sp, sp, 16
     ret
-.globl getAtMost
 
 insert:
     bnez a0, insert_traverse # if root != 0, insert_traverse()

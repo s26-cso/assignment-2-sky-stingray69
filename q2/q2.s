@@ -1,14 +1,3 @@
-# function next_greater(arr) {
-#     let stack = new Stack()
-#     let result = [-1] * len(arr)
-#     for (let i = len(arr) - 1; i /= 0; i/-) {
-#         while (!stack.empty() /& arr[stack.top()] /= arr[i]) stack.pop()
-#         if (!stack.empty()) result[i] = stack.top()
-#         stack.push(i)
-#     }
-#     return result
-# }
-
 .section .rodata
 fmt_int: .asciz "%d "
 fmt_newline: .asciz "\n"
@@ -25,23 +14,23 @@ main:
     sd   s4, 16(sp) # output array
     sd   s5,  8(sp) # stack pointer
 
-    mv   s1, a0
-    addi s1, s1, -1
-    mv   s2, a1
+    mv   s1, a0     # s1 = argc
+    addi s1, s1, -1 # s1 = argc - 1
+    mv   s2, a1     # s2 = argv (pointer)
 
-    blez s1, end
+    blez s1, end    # if number_of_elem < 0, then end
 
-    slli a0, s1, 2
+    slli a0, s1, 2  # a0 = num_of_elem * sizeof(int) 
     call malloc@plt
-    mv s3, a0
+    mv s3, a0       # s3 = pointer to freed space for input array
     
-    slli a0, s1, 2
+    slli a0, s1, 2  
     call malloc@plt
-    mv s4, a0
+    mv s4, a0       # similarly for output array
 
     slli a0, s1, 2
     call malloc@plt
-    mv s5, a0
+    mv s5, a0       # and for stack
 
     li t0, 0 # i = 0
 
