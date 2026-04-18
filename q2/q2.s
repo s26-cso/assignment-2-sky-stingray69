@@ -1,5 +1,6 @@
 .section .rodata
-fmt_int: .asciz "%d "
+fmt_int: .asciz "%d"
+fmt_space: .asciz " "
 fmt_newline: .asciz "\n"
 
 .section .text
@@ -120,8 +121,14 @@ print_loop:
     la a0, fmt_int
     call printf@plt
 
-    addi s6, s6, 1
-    j    print_loop
+    addi t0, s6, 1
+    beq t0, s1, skip_space
+    la a0, fmt_space
+    call printf@plt
+
+skip_space:
+    add s6, s6, 1
+    j print_loop
 
 print_newline:
     la   a0, fmt_newline

@@ -5,8 +5,8 @@ int main() {
     char op[6];
     int a, b;
 
-    while(1) {
-        scanf("%5s %d %d", op, &a, &b);
+    while(scanf("%5s %d %d", op, &a, &b) == 3) {
+        
         char path[20];
 
         snprintf(path, sizeof(path), "./lib%s.so", op);
